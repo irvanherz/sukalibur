@@ -16,7 +16,7 @@
 To get started with Sukalibur, clone this repository and follow the steps below:
 
 ```bash
-git clone https://github.com/yourusername/sukalibur.git
+git clone https://github.com/irvanherz/sukalibur.git
 cd sukalibur
 dotnet build
 dotnet run
@@ -26,7 +26,7 @@ dotnet run
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/sukalibur.git
+   git clone https://github.com/irvanherz/sukalibur.git
    cd sukalibur
    ```
 
