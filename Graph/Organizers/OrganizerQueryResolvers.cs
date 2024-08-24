@@ -1,4 +1,5 @@
-﻿using Sukalibur.Graph.Organizers;
+﻿using Microsoft.EntityFrameworkCore;
+using Sukalibur.Graph.Organizers;
 
 namespace Sukalibur.Graph.Organizers
 {
@@ -14,7 +15,7 @@ namespace Sukalibur.Graph.Organizers
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Organizer> GetOrganizers([Service] AppDbContext context)
+        public IQueryable<Organizer> GetOrganizers(AppDbContext context)
         {
             return context.Organizers;
         }

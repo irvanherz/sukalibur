@@ -1,4 +1,5 @@
-﻿using Sukalibur.Graph.Users;
+﻿using Microsoft.EntityFrameworkCore;
+using Sukalibur.Graph.Users;
 
 namespace Sukalibur.Graph.Trips
 {
@@ -14,7 +15,7 @@ namespace Sukalibur.Graph.Trips
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<TripCategory> GetTripCategories([Service] AppDbContext context)
+        public IQueryable<TripCategory> GetTripCategories(AppDbContext context)
         {
             return context.TripCategories;
         }

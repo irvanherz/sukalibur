@@ -1,4 +1,6 @@
-﻿namespace Sukalibur.Graph.Users
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Sukalibur.Graph.Users
 {
     [ExtendObjectType(typeof(Query))]
     public class UserQueryResolvers
@@ -12,7 +14,7 @@
         [UsePaging]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<User> GetUsers([Service] AppDbContext context)
+        public IQueryable<User> GetUsers(AppDbContext context)
         {
             return context.Users;
         }

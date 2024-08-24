@@ -33,8 +33,6 @@ namespace Sukalibur
             };
 
             // Add services to the container.
-            builder.Services.AddSingleton(jwtConfig);
-            builder.Services.AddSingleton(mapper);
             builder.Services.AddPooledDbContextFactory<AppDbContext>(options =>
             {
                 options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 25)));
@@ -45,27 +43,41 @@ namespace Sukalibur
                     options.TokenValidationParameters = jwtTokenValidationParams;
                 });
 
+            builder.Services.AddSingleton(jwtConfig);
+            builder.Services.AddSingleton(mapper);
+      
             builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<OrganizerService>();
+            builder.Services.AddScoped<TripService>();
+            builder.Services.AddScoped<TripCategoryService>();
+            builder.Services.AddScoped<UserService>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddHttpContextAccessor();
+
             builder.Services.AddGraphQLServer()
                 .RegisterDbContext<AppDbContext>(DbContextKind.Pooled)
+                .AddDefaultTransactionScopeHandler()
+                .AddMutationConventions()
                 .AddDataLoader<UserBatchDataLoader>()
                 .AddDataLoader<OrganizerBatchDataLoader>()
                 .AddDataLoader<TripBatchDataLoader>()
                 .AddDataLoader<TripCategoryBatchDataLoader>()
                 .AddMutationType<Mutation>()
                 .AddQueryType<Query>()
-                .AddTypeExtension<UserQueryResolvers>()
-                .AddTypeExtension<OrganizerQueryResolvers>()
-                .AddTypeExtension<TripQueryResolvers>()
-                .AddTypeExtension<TripCategoryQueryResolvers>()
                 .AddTypeExtension<OrganizerExtendedFieldResolvers>()
                 .AddTypeExtension<TripExtendedFieldResolvers>()
                 .AddTypeExtension<AuthMutationResolvers>()
+                .AddTypeExtension<UserQueryResolvers>()
+                .AddTypeExtension<UserMutationResolvers>()
+                .AddTypeExtension<OrganizerQueryResolvers>()
+                .AddTypeExtension<OrganizerMutationResolvers>()
+                .AddTypeExtension<TripQueryResolvers>()
+                .AddTypeExtension<TripMutationResolvers>()
+                .AddTypeExtension<TripCategoryQueryResolvers>()
+                .AddTypeExtension<TripCategoryMutationResolvers>()
                 .AddFiltering()
                 .AddSorting()
                 .AddAuthorization();

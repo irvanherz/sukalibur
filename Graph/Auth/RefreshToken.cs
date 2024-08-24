@@ -16,12 +16,14 @@ namespace Sukalibur.Graph.Auth
         public string Token { get; set; } = string.Empty;
 
         [Column("expired_at")]
-        public DateTime ExpiredAt { get; set; }
+        public DateTime ExpiredAt { get; set; } = DateTime.UtcNow;
 
         [Column("created_at")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Column("updated_at")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }
