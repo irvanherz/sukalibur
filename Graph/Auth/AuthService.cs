@@ -22,7 +22,7 @@ namespace Sukalibur.Graph.Auth
 
         public async Task<AuthResult> RegisterUserAsync(RegisterUserInput input)
         {
-            await using var context = _contextFactory.CreateDbContext();
+            using var context = _contextFactory.CreateDbContext();
             var user = _mapper.Map<User>(input);
             user.Password = HashPassword(input.Password);
 
@@ -49,7 +49,7 @@ namespace Sukalibur.Graph.Auth
 
         public async Task<AuthResult> LoginUserAsync(LoginUserInput input)
         {
-            await using var context = _contextFactory.CreateDbContext();
+            using var context = _contextFactory.CreateDbContext();
 
             var user = await context.Users.Where(u => u.Username == input.Username).FirstOrDefaultAsync();
             if (user == null)
@@ -71,6 +71,7 @@ namespace Sukalibur.Graph.Auth
                 Token = refreshToken,
                 ExpiredAt = DateTime.Now.AddDays(7)
             });
+
             await context.SaveChangesAsync();
 
             return new AuthResult
@@ -83,7 +84,7 @@ namespace Sukalibur.Graph.Auth
 
         public async Task<AuthResult> RefreshTokenAsync(RefreshTokenInput input)
         {
-            await using var context = _contextFactory.CreateDbContext();
+            using var context = _contextFactory.CreateDbContext();
 
             var refreshTokenData = await context.RefreshTokens.Where(t => t.Token == input.RefreshToken).FirstOrDefaultAsync();
             if (refreshTokenData == null)
@@ -131,8 +132,8 @@ namespace Sukalibur.Graph.Auth
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var additionalClaims = new List<Claim>() {
-                new Claim("sub", user.Id.ToString()),
-                new Claim("role", user.Role.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
             };
             var securityToken = new JwtSecurityToken(_jwtConfig.Issuer, _jwtConfig.Audience, additionalClaims,
               expires: DateTime.Now.AddMinutes(15),

@@ -70,6 +70,7 @@ namespace Sukalibur
                 .AddTypeExtension<OrganizerExtendedFieldResolvers>()
                 .AddTypeExtension<TripExtendedFieldResolvers>()
                 .AddTypeExtension<AuthMutationResolvers>()
+                .AddTypeExtension<AuthQueryResolvers>()
                 .AddTypeExtension<UserQueryResolvers>()
                 .AddTypeExtension<UserMutationResolvers>()
                 .AddTypeExtension<OrganizerQueryResolvers>()
