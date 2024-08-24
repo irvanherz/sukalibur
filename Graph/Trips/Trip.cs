@@ -36,5 +36,8 @@ namespace Sukalibur.Graph.Trips
         [Column("updated_at", TypeName = "timestamp")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
+        public TripCategory? Category { get; set; } = null;
+        public Organizer Organizer { get; set; } = null!;
     }
 }

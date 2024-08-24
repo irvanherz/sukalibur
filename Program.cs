@@ -30,7 +30,8 @@ namespace Sukalibur
 
             // Add services to the container.
             builder.Services.AddSingleton(jwtConfig);
-            builder.Services.AddDbContext<AppDbContext>(options => {
+            builder.Services.AddPooledDbContextFactory<AppDbContext>(options =>
+            {
                 options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 25)));
             });
             builder.Services
@@ -43,7 +44,7 @@ namespace Sukalibur
             builder.Services.AddSwaggerGen();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddGraphQLServer()
-                .RegisterDbContext<AppDbContext>()
+                .RegisterDbContext<AppDbContext>(DbContextKind.Pooled)
                 .AddDataLoader<UserBatchDataLoader>()
                 .AddDataLoader<OrganizerBatchDataLoader>()
                 .AddDataLoader<TripBatchDataLoader>()
@@ -54,6 +55,8 @@ namespace Sukalibur
                 .AddTypeExtension<OrganizerQueryResolvers>()
                 .AddTypeExtension<TripQueryResolvers>()
                 .AddTypeExtension<TripCategoryQueryResolvers>()
+                .AddTypeExtension<OrganizerExtendedFieldResolvers>()
+                .AddTypeExtension<TripExtendedFieldResolvers>()
                 .AddFiltering()
                 .AddSorting()
                 .AddAuthorization();

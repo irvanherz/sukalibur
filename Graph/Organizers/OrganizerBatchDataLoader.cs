@@ -5,17 +5,19 @@ namespace Sukalibur.Graph.Organizers
 {
     public class OrganizerBatchDataLoader : BatchDataLoader<int, Organizer>
     {
-        private readonly AppDbContext _context;
+        private readonly IDbContextFactory<AppDbContext> _contextFactory;
 
-        public OrganizerBatchDataLoader(AppDbContext context, IBatchScheduler batchScheduler, DataLoaderOptions? options = null) : base(batchScheduler, options)
+        public OrganizerBatchDataLoader(IDbContextFactory<AppDbContext> contextFactory, IBatchScheduler batchScheduler, DataLoaderOptions? options = null) : base(batchScheduler, options)
         {
-            _context = context;
+            _contextFactory = contextFactory;
         }
 
         protected override async Task<IReadOnlyDictionary<int, Organizer>> LoadBatchAsync(IReadOnlyList<int> ids, CancellationToken cancellationToken)
         {
+            await using var context = _contextFactory.CreateDbContext();
+
             // instead of fetching one person, we fetch multiple persons
-            var organizers = await _context.Organizers.Where(c => ids.Contains(c.Id)).ToListAsync(cancellationToken);
+            var organizers = await context.Organizers.Where(c => ids.Contains(c.Id)).ToListAsync(cancellationToken);
             return organizers.ToDictionary(x => x.Id);
         }
     }

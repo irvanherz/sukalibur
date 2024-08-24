@@ -5,17 +5,18 @@ namespace Sukalibur.Graph.Trips
 {
     public class TripCategoryBatchDataLoader : BatchDataLoader<int, TripCategory>
     {
-        private readonly AppDbContext _context;
+        private readonly IDbContextFactory<AppDbContext> _contextFactory;
 
-        public TripCategoryBatchDataLoader(AppDbContext context, IBatchScheduler batchScheduler, DataLoaderOptions? options = null) : base(batchScheduler, options)
+        public TripCategoryBatchDataLoader(IDbContextFactory<AppDbContext> contextFactory, IBatchScheduler batchScheduler, DataLoaderOptions? options = null) : base(batchScheduler, options)
         {
-            _context = context;
+            _contextFactory = contextFactory;
         }
 
         protected override async Task<IReadOnlyDictionary<int, TripCategory>> LoadBatchAsync(IReadOnlyList<int> ids, CancellationToken cancellationToken)
         {
+            await using var context = _contextFactory.CreateDbContext();
             // instead of fetching one person, we fetch multiple persons
-            var categories = await _context.TripCategories.Where(c => ids.Contains(c.Id)).ToListAsync(cancellationToken);
+            var categories = await context.TripCategories.Where(c => ids.Contains(c.Id)).ToListAsync(cancellationToken);
             return categories.ToDictionary(x => x.Id);
         }
     }
