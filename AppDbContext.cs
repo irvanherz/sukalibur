@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using Microsoft.EntityFrameworkCore;
+using Sukalibur.Graph.Auth;
 using Sukalibur.Graph.Organizers;
 using Sukalibur.Graph.Trips;
 using Sukalibur.Graph.Users;
@@ -39,7 +40,7 @@ namespace Sukalibur
                 .RuleFor(m => m.UpdatedAt, f => f.Date.Past())
                 .Generate(100);
             accountData.InsertRange(0, [
-                new User { Id = 1, Username = "root", Email = "root@sukalibur.com", FullName = "Root", Password = "", Role = UserRole.Super, Gender = UserGender.Other }
+                new User { Id = 1, Username = "root", Email = "root@sukalibur.com", FullName = "Root", Password = BCrypt.Net.BCrypt.HashPassword("root"), Role = UserRole.Super, Gender = UserGender.Other }
              ]);
             builder.Entity<User>()
                 .HasData(accountData);
@@ -66,5 +67,6 @@ namespace Sukalibur
         public DbSet<Organizer> Organizers { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<TripCategory> TripCategories { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

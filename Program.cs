@@ -1,8 +1,10 @@
 
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Sukalibur.Graph;
+using Sukalibur.Graph.Auth;
 using Sukalibur.Graph.Organizers;
 using Sukalibur.Graph.Trips;
 using Sukalibur.Graph.Users;
@@ -17,6 +19,8 @@ namespace Sukalibur
             var builder = WebApplication.CreateBuilder(args);
 
             var jwtConfig = builder.Configuration.GetSection("JWTConfig").Get<JwtConfig>()!;
+            var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
+            var mapper = mapperConfig.CreateMapper();
             var jwtTokenValidationParams = new TokenValidationParameters
             {
                 ValidateIssuer = true,
@@ -30,6 +34,7 @@ namespace Sukalibur
 
             // Add services to the container.
             builder.Services.AddSingleton(jwtConfig);
+            builder.Services.AddSingleton(mapper);
             builder.Services.AddPooledDbContextFactory<AppDbContext>(options =>
             {
                 options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 25)));
@@ -39,6 +44,9 @@ namespace Sukalibur
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = jwtTokenValidationParams;
                 });
+
+            builder.Services.AddScoped<AuthService>();
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -57,6 +65,7 @@ namespace Sukalibur
                 .AddTypeExtension<TripCategoryQueryResolvers>()
                 .AddTypeExtension<OrganizerExtendedFieldResolvers>()
                 .AddTypeExtension<TripExtendedFieldResolvers>()
+                .AddTypeExtension<AuthMutationResolvers>()
                 .AddFiltering()
                 .AddSorting()
                 .AddAuthorization();
