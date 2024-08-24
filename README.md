@@ -4,7 +4,7 @@
 
 ## Features
 
-- **GraphQL**: Built using the [HotChocolate GraphQL library](https://chillicream.com/docs/hotchocolate/v13), providing a powerful and flexible API layer with support for advanced features like schema stitching, filtering, and more.
+- **HotChocolate GraphQL**: Built using the [HotChocolate GraphQL library](https://chillicream.com/docs/hotchocolate/v13), providing a powerful and flexible API layer with support for advanced features like schema stitching, filtering, and more.
 - **ASP.NET Core 8**: Built on the latest and greatest version of ASP.NET Core, ensuring high performance, security, and scalability.
 - **Entity Framework Core**: Utilizes Entity Framework Core for efficient data access and management, making it easy to interact with the database using object-oriented code.
 - **MySQL**: Integrated with MySQL for reliable and scalable data storage, tailored to handle a wide range of trip marketplace data.
@@ -30,29 +30,24 @@ dotnet run
    cd sukalibur
    ```
 
-2. **Configure `appsettings.json`**:
-   - Create a new file named `appsettings.Development.json` in the root of the project.
-   - Use the following configuration as a reference:
+2. **Configure Secrets**:
+   - Use the [ASP.NET Core Secret Manager tool](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-8.0) to securely store sensitive information such as connection strings and API secrets.
+   - The `secrets.json` file should follow this format:
 
    ```json
    {
-     "Logging": {
-       "LogLevel": {
-         "Default": "Information",
-         "Microsoft.AspNetCore": "Warning"
-       }
-     },
-     "AllowedHosts": "*",
-     "ConnectionStrings": {
-       "DefaultConnection": "server=localhost;port=3306;database=sukalibur;user=root;AllowZeroDateTime=True"
-     },
      "JwtConfig": {
        "Issuer": "Sukalibur",
        "Audience": "Sukalibur",
-       "Secret": "xxxxxxxxxxxxxxxxxxxxx"
+       "Secret": "Sukalibur_xxxxx"
+     },
+     "ConnectionStrings": {
+       "DefaultConnection": "server=localhost;port=3306;database=sukalibur;user=root;AllowZeroDateTime=True"
      }
    }
    ```
+
+   - For detailed instructions on setting up secrets, refer to the [official Microsoft documentation](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-8.0).
 
 3. **Create and Apply Entity Framework Migrations**:
    - Ensure that Entity Framework Core CLI tools are installed:
