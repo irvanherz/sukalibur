@@ -1,4 +1,5 @@
-﻿using Sukalibur.Graph.Organizers;
+﻿using AppAny.HotChocolate.FluentValidation;
+using Sukalibur.Graph.Organizers;
 
 namespace Sukalibur.Graph.Trips
 {
@@ -6,14 +7,14 @@ namespace Sukalibur.Graph.Trips
     public class TripMutationResolvers
     {
         [UseMutationConvention]
-        public async Task<Trip> CreateTrip(CreateTripInput input, [Service] TripService tripService)
+        public async Task<Trip> CreateTrip([UseFluentValidation] CreateTripInput input, [Service] TripService tripService)
         {
             var trip = await tripService.CreateTripAsync(input);
             return trip;
         }
 
         [UseMutationConvention]
-        public async Task<Trip> UpdateTrip(UpdateTripInput input, [Service] TripService tripService)
+        public async Task<Trip> UpdateTrip([UseFluentValidation] UpdateTripInput input, [Service] TripService tripService)
         {
             var trip = await tripService.UpdateTripAsync(input);
             return trip;

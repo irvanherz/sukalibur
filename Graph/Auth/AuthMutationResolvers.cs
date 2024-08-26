@@ -1,4 +1,6 @@
-﻿namespace Sukalibur.Graph.Auth
+﻿using AppAny.HotChocolate.FluentValidation;
+
+namespace Sukalibur.Graph.Auth
 {
     [ExtendObjectType(typeof(Mutation))]
     public class AuthMutationResolvers
@@ -11,7 +13,7 @@
         }
 
         [UseMutationConvention]
-        public async Task<AuthResult> LoginUser(LoginUserInput input, [Service] AuthService authService)
+        public async Task<AuthResult> LoginUser([UseFluentValidation] LoginUserInput input, [Service] AuthService authService)
         {
             var result = await authService.LoginUserAsync(input);
             return result;

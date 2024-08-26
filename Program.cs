@@ -1,5 +1,7 @@
 
+using AppAny.HotChocolate.FluentValidation;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -56,6 +58,7 @@ namespace Sukalibur
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddGraphQLServer()
                 .RegisterDbContext<AppDbContext>(DbContextKind.Pooled)
@@ -79,6 +82,7 @@ namespace Sukalibur
                 .AddTypeExtension<TripMutationResolvers>()
                 .AddTypeExtension<TripCategoryQueryResolvers>()
                 .AddTypeExtension<TripCategoryMutationResolvers>()
+                .AddFluentValidation()
                 .AddFiltering()
                 .AddSorting()
                 .AddAuthorization();
