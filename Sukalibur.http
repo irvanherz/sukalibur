@@ -1,0 +1,6 @@
+@Sukalibur_HostAddress = http://localhost:5113
+
+GET {{Sukalibur_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

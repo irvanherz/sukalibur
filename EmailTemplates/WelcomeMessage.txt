@@ -1,0 +1,17 @@
+﻿Hai, {{name}}!
+
+Selamat datang di Sukalibur! Kami super excited kamu sudah bergabung di komunitas pecinta liburan ini. 🎉
+
+Di Sukalibur, kamu bisa menemukan berbagai pilihan paket wisata yang seru, unik, dan pastinya bikin liburanmu jadi lebih berkesan. Mulai dari petualangan alam, staycation santai, sampai city tour, semuanya ada di sini!
+
+Mulai sekarang juga dan temukan trip impianmu:
+
+{{action_url}}
+
+Butuh bantuan atau ada yang ingin ditanyakan? Langsung aja hubungi tim kami di email support@sukalibur.com atau Whatsap +6285156818651. Kami selalu siap bantu, kok!
+
+Nikmati setiap langkah perjalananmu bersama Sukalibur. Jangan lupa, keseruan liburan dimulai dari sini!
+
+
+Salam hangat,
+Irvan dan tim Sukalibur

@@ -1,0 +1,2 @@
+﻿Create Email Template
+aws sesv2 create-email-template --cli-input-json file://./EmailTemplates/WelcomeMessage.json
