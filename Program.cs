@@ -43,7 +43,7 @@ namespace Sukalibur
                 .WriteTo.Console()
                 .CreateLogger();
             Log.Information("Starting up!");
-            
+
             var builder = WebApplication.CreateBuilder(args);
             var defaultApp = FirebaseApp.Create(new AppOptions()
             {
