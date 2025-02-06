@@ -31,6 +31,7 @@ using Sukalibur.Shared.Mapper;
 using Sukalibur.Shared.Options;
 using Sukalibur.Shared.Services;
 using System.Text.Json;
+using Serilog;
 
 namespace Sukalibur
 {
@@ -38,6 +39,11 @@ namespace Sukalibur
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+            Log.Information("Starting up!");
+            
             var builder = WebApplication.CreateBuilder(args);
             var defaultApp = FirebaseApp.Create(new AppOptions()
             {
@@ -53,6 +59,7 @@ namespace Sukalibur
 
             var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
             var mapper = mapperConfig.CreateMapper();
+            builder.Services.AddSerilog();
             builder.Services.AddNpgsqlDataSource(connectionString, opts =>
             {
                 opts

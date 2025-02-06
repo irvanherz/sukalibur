@@ -5,33 +5,32 @@
 ## Features
 
 - **HotChocolate GraphQL**: Built with the [HotChocolate GraphQL library](https://chillicream.com/docs/hotchocolate/v13), providing a powerful, flexible API layer with advanced features like schema stitching, filtering, and more.
-- **ASP.NET Core 8**: Leverages the latest version of ASP.NET Core for high performance, security, and scalability.
+- **ASP.NET Core 9**: Leverages the latest version of ASP.NET Core for high performance, security, and scalability.
 - **Entity Framework Core**: Utilizes Entity Framework Core for efficient data access and management, enabling easy interaction with the database using object-oriented code.
-- **MySQL**: Integrated with MySQL for reliable, scalable data storage, optimized for handling a wide range of trip marketplace data.
+- **PostgreSQL**: Integrated with PostgreSQL for reliable, scalable data storage, optimized for handling a wide range of trip marketplace data.
 - **Modular Code Structure**: Designed with a clean, modular architecture for easy extension, maintenance, and navigation.
 - **Best Practices**: Follows industry best practices for security, performance, and code quality, ensuring a stable and maintainable codebase.
 
+## Prerequisities
+
+In order to go to getting started, you must prepare some of thing.
+
+- Active AWS CLI Credential with SES.
+- Firebase project
+- BunnyCDN Storage
+- Midtrans developer account
+- PostgreSQL 
+  Ensure your PostgreSQL setup includes:
+  - **pgvector**: [pgvector](https://github.com/pgvector/pgvector)
+  - **postgis**: [postgis](https://postgis.net/)
+
 ## Getting Started
 
-To get started with Sukalibur, clone the repository and follow the steps below:
+To get started with Sukalibur, follow the steps below:
 
-```bash
-git clone https://github.com/irvanherz/sukalibur.git
-cd sukalibur
-dotnet build
-dotnet run
-```
-
-Ensure your PostgreSQL setup includes:
-- **pgvector**: [pgvector](https://github.com/pgvector/pgvector)
-- **postgis**: [postgis](https://postgis.net/)
-
-## Setup for Debugging
-
-1. **Clone the Repository**:
+1. **Clone Repository**
    ```bash
    git clone https://github.com/irvanherz/sukalibur.git
-   cd sukalibur
    ```
 
 2. **Configure Secrets**:
